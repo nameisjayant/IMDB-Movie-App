@@ -17,18 +17,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 import com.programming_simplified.movieapp.R
 import com.programming_simplified.movieapp.data.model.Movies
 import com.programming_simplified.movieapp.data.network.ApiService
 import com.programming_simplified.movieapp.features.movies.ui.MovieViewModel
+import com.programming_simplified.movieapp.utils.MovieNavigationItems
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MovieListScreen(
-    viewModel: MovieViewModel = hiltViewModel()
+    viewModel: MovieViewModel,
+    navHostController: NavHostController
 ) {
 
     val response = viewModel.movieResponse.value
@@ -37,7 +40,8 @@ fun MovieListScreen(
         LazyColumn{
             items(response.data, key = {it.id!!}){res->
                 MovieList(results = res ) {
-
+                    viewModel.setMovie(res)
+                    navHostController.navigate(MovieNavigationItems.MovieDetails.route)
                 }
             }
         }

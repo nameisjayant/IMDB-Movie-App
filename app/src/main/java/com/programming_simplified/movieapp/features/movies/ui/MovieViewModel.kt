@@ -8,8 +8,11 @@ import androidx.lifecycle.viewModelScope
 import com.programming_simplified.movieapp.common.doOnFailure
 import com.programming_simplified.movieapp.common.doOnLoading
 import com.programming_simplified.movieapp.common.doOnSuccess
+import com.programming_simplified.movieapp.data.model.Movies
 import com.programming_simplified.movieapp.features.movies.domain.usecase.MovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,6 +24,13 @@ class MovieViewModel @Inject constructor(
 
     private val _movieResponse:MutableState<MovieState> = mutableStateOf(MovieState())
     val movieResponse:State<MovieState> = _movieResponse
+
+    private val _movieDetails:MutableState<Movies.Results> = mutableStateOf(Movies.Results())
+    val movieDetails:MutableState<Movies.Results> = _movieDetails
+
+    fun setMovie(data:Movies.Results){
+        _movieDetails.value = data
+    }
 
     init {
         getMovies()

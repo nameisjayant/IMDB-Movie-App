@@ -5,10 +5,10 @@ data class Movies(
     val results: List<Results?>?
 ) {
     data class Results(
-        val id: Long?,
-        val original_title: String?,
-        val overview: String?,
-        val poster_path: String?,
-        val vote_average:String?
+        val id: Long?=0,
+        val original_title: String?="",
+        val overview: String?="",
+        val poster_path: String?="",
+        val vote_average:String?=""
     )
 }
