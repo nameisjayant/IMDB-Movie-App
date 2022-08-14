@@ -1,4 +1,6 @@
-# Find-Movie
+# IMDB Movie App
+
+Build with Jetpack Compose & all modern techniques and architecture of android app development
 
 ## ScreenShots 🛠
 <p align="center">
