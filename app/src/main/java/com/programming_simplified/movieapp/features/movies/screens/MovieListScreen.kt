@@ -15,10 +15,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
+import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import com.programming_simplified.movieapp.R
 import com.programming_simplified.movieapp.data.model.Movies
@@ -73,19 +77,18 @@ fun MovieList(results: Movies.Results, onGettingClick: () -> Unit) {
     ) {
         Row {
             Image(
-                painter = rememberImagePainter(
-                    data = "${ApiService.BASE_POSTER_URL}${results.poster_path}",
-                    builder = {
-                        transformations(CircleCropTransformation())
-                        crossfade(true)
-                        placeholder(R.drawable.ic_launcher_foreground)
-                    }
+                painter = rememberAsyncImagePainter(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data("${ApiService.BASE_POSTER_URL}${results.poster_path}")
+                        .placeholder(R.drawable.ic_launcher_foreground)
+                        .crossfade(true)
+                        .transformations(CircleCropTransformation())
+                        .build()
                 ),
                 contentDescription = null,
                 modifier = Modifier
                     .size(100.dp)
-                    .align(Alignment.CenterVertically)
-                    .padding(start = 5.dp)
+                    .padding(horizontal = 10.dp, vertical = 10.dp)
             )
             Column(
                 modifier = Modifier
@@ -93,8 +96,8 @@ fun MovieList(results: Movies.Results, onGettingClick: () -> Unit) {
                     .fillMaxWidth()
                     .align(Alignment.CenterVertically)
             ) {
-                Text(text = results.original_title!!, style = typography.h6)
-                Text(text = results.overview!!, style = typography.caption)
+                Text(text = results.original_title!!, style = typography.h6, textAlign = TextAlign.Center)
+                Text(text = results.overview!!, style = typography.caption, textAlign = TextAlign.Center)
 
             }
         }

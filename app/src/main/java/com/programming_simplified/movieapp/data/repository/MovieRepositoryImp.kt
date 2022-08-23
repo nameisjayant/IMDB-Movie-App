@@ -12,7 +12,6 @@ import javax.inject.Inject
 
 class MovieRepositoryImp @Inject constructor(
     private val apiService: ApiService,
-  //  private val defaultDispatcher:CoroutineDispatcher = Dispatchers.Default
 ) : BaseRepository() , MovieRepository {
 
     override suspend fun getMovies(): Flow<Result<Movies>> = safeApiCall {

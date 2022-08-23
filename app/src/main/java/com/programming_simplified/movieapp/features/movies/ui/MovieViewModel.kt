@@ -41,22 +41,16 @@ class MovieViewModel @Inject constructor(
             .doOnSuccess {
                 _movieResponse.value = MovieState(
                     it,
-                    "",
-                    false
                 )
             }
             .doOnFailure {
                 _movieResponse.value = MovieState(
-                    emptyList(),
-                    it.toString(),
-                    false
+                   error = it.toString(),
                 )
             }
             .doOnLoading {
                 _movieResponse.value = MovieState(
-                    emptyList(),
-                    "",
-                    true
+                   isLoading =  true
                 )
             }.collect()
     }
